@@ -7,17 +7,18 @@ import (
 )
 
 func main() {
-
 	metadata := client.SnakeMetadataResponse{
 		APIVersion: "1",
 		Author:     "",
-		Color:      "#888888",
-		Head:       "default",
-		Tail:       "default",
+		Color:      "#C35817",
+		Head:       "ferret",
+		Tail:       "horse",
 	}
 
 	portfolio := agent.NewPortfolio(
-		agent.WeightedHeuristic{ Weight: 1.0, Name: "team-health", Heuristic: HeuristicHealth },
+		agent.NewHeuristic(1.0, "team-health", HeuristicHealth),
+		agent.NewHeuristic(5.0, "food-metric", HeuristicFood),
+		agent.NewHeuristic(10.0, "eaten-metric", HeuristicEat),
 	)
 
 	snakeAgent := agent.NewSnakeAgent(portfolio, metadata)
@@ -25,4 +26,3 @@ func main() {
 
 	server.Start()
 }
-
